@@ -1,43 +1,38 @@
 <template>
   <div id="app">
-    <search v-on:SearchRequested="handleSearch"></search>
-    <p v-if="isLoading">Loading</p>
-    <preview :gifs="gifs"></preview>
+    <h1>{{welcomeMessage}}</h1>
+
+    <input v-model="name" />
+    <button @click="updateName">Update Name</button>
   </div>
 </template>
 
 <script>
-  import Search from './components/Search.vue';
-  import Preview from './components/Preview.vue';
+  import {mapState, mapGetters, mapActions} from 'vuex';
 
   export default {
     name: 'app',
-    components: { Search, Preview },
-    data(){
-      return{
-        isLoading: true,
-        gifs: []
+    data() {
+      return {
+        name: 'serkanekinci'
       }
     },
-    methods:{
-      doQuery(url){
-        fetch(url)
-          .then((res)=> {return res.json()})
-          .then((res) => {
-            this.gifs = res.data;
-            this.isLoading = false;
-          })
+    computed: {
+      ...mapState([
+        'message',
+        'username',
+      ]),
+      ...mapGetters([
+        'welcomeMessage'
+      ]),
+    },
+    methods: {
+      ...mapActions([
+        'updateUserName'
+      ]),
+      updateName() {
+        this.updateUserName(this.name)
       },
-      handleSearch(query){
-        this.gifs = [];
-        this.isLoading = true;
-        const url = `http://api.giphy.com/v1/gifs/search?q=${query}&api_key=3eFQvabDx69SMoOemSPiYfh9FY0nzO9x`;
-        this.doQuery(url);
-      }
-    },
-    created() {
-      const url = 'http://api.giphy.com/v1/gifs/trending?api_key=3eFQvabDx69SMoOemSPiYfh9FY0nzO9x';
-      this.doQuery(url);
     }
   }
 </script>
@@ -47,8 +42,8 @@
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
   }
 </style>
-
-
-<!--    v-bind yerine :      -->
