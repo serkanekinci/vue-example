@@ -12,7 +12,7 @@ const getters = {
     return `${state.message}  ${state.username}`
   }
 };
-const mutations = {   //async olmaz sync calısır
+const mutations = {   //a sync
   setUserName(state,name){
     state.username = name;
   }
