@@ -3,6 +3,7 @@
     <ul>
       <li v-for="gif in gifs">
       <img :src= "gif.images.fixed_height.url"/>
+        <h5>deneme</h5>
       </li>
     </ul>
   </div>
